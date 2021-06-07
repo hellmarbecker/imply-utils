@@ -48,4 +48,18 @@ while (<>) {
     }
 }
 
-print encode_json(\@columnsFlatten);
+my $flattenSpec = {
+    flattenSpec => {
+        useFieldDiscovery => "true",
+        fields => \@columnsFlatten
+    }
+};
+
+my $dimensionSpec = {
+    dimensionSpec => {
+        dimensions => \@columnsDim
+    }
+};
+
+print encode_json($flattenSpec);
+print encode_json($dimensionSpec);
