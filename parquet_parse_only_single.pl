@@ -6,6 +6,7 @@ use Data::Dumper;
 use JSON;
 
 # read output from parquet-tools (py) and generate a usable dimension spec
+# don't keep the crazy level 3 nested things
 
 my %TYPES = (
     BYTE_ARRAY => "string",
@@ -14,8 +15,6 @@ my %TYPES = (
 );
 
 my $numColumns = 0;
-my @columnsFlatten;
-my $currentColumnFlatten; # hashref
 my @columnsDim;
 my $currentColumnDim; # hashref
 
@@ -24,36 +23,26 @@ while (<>) {
     if ( /#{12}\s+Column\(([^\)]*)\)/ ) {
 
         # Start a new dimension entry
-        $currentColumnFlatten = {};
-        push @columnsFlatten, $currentColumnFlatten;
         $currentColumnDim = {};
-        push @columnsDim, $currentColumnDim;
         ++$numColumns;
 
     } elsif ( my($k, $v) = /^([^:]+):\s*(.*?$)/ ) {
 
         if ($k =~ /path/) {
 
-            my $dimName = $v;
-            my $nested = $dimName =~ s/\./_/g and $currentColumnFlatten->{expr} = '$.'.$v;
-            $currentColumnFlatten->{type} = $nested ? "path" : "root";
-            $currentColumnFlatten->{name} = $dimName;
-            $currentColumnDim->{name} = $dimName;
+            $currentColumnDim->{name} = $v;
 
         } elsif ($k =~ /physical_type/) {
 
             $currentColumnDim->{type} = $TYPES{$v};
 
+        } elsif ($k =~ /max_definition_level/) {
+
+            $v == 1 and push(@columnsDim, $currentColumnDim);
+
         }
     }
 }
-
-my $flattenSpec = {
-    flattenSpec => {
-        useFieldDiscovery => "true",
-        fields => \@columnsFlatten
-    }
-};
 
 my $dimensionSpec = {
     dimensionsSpec => {
@@ -61,7 +50,5 @@ my $dimensionSpec = {
     }
 };
 
-print encode_json($flattenSpec);
-print "\n";
 print encode_json($dimensionSpec);
 print "\n";
