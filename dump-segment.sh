@@ -1,5 +1,6 @@
 #!/bin/bash
 
+DUMP_TMPDIR=~/tmpwork
 DRUID_HOME="/Users/hellmarbecker/apache-druid-0.22.0"
 
 java -classpath "${DRUID_HOME}/lib/*" -Ddruid.extensions.loadList="[]" org.apache.druid.cli.Main \
