@@ -14,7 +14,7 @@ for f in $FILES; do
   FBASE=$(basename $f)
   ODIR=${DUMP_TMPDIR}/$FDIR
   mkdir -p $ODIR
-  unzip $f -d $ODIR
+  unzip ${DRUID_DATADIR}/$f -d $ODIR
 
   java -classpath "${DRUID_HOME}/lib/*" -Ddruid.extensions.loadList="[]" org.apache.druid.cli.Main \
     tools dump-segment \
