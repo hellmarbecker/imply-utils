@@ -1,0 +1,230 @@
+{
+  "type": "index_parallel",
+  "spec": {
+    "dataSchema": {
+      "dataSource": "wikipedia-range",
+      "timestampSpec": {
+        "column": "time",
+        "format": "iso",
+        "missingValue": null
+      },
+      "dimensionsSpec": {
+        "dimensions": [
+          {
+            "type": "string",
+            "name": "channel",
+            "multiValueHandling": "SORTED_ARRAY",
+            "createBitmapIndex": true
+          },
+          {
+            "type": "string",
+            "name": "cityName",
+            "multiValueHandling": "SORTED_ARRAY",
+            "createBitmapIndex": true
+          },
+          {
+            "type": "string",
+            "name": "comment",
+            "multiValueHandling": "SORTED_ARRAY",
+            "createBitmapIndex": true
+          },
+          {
+            "type": "string",
+            "name": "countryIsoCode",
+            "multiValueHandling": "SORTED_ARRAY",
+            "createBitmapIndex": true
+          },
+          {
+            "type": "string",
+            "name": "countryName",
+            "multiValueHandling": "SORTED_ARRAY",
+            "createBitmapIndex": true
+          },
+          {
+            "type": "string",
+            "name": "isAnonymous",
+            "multiValueHandling": "SORTED_ARRAY",
+            "createBitmapIndex": true
+          },
+          {
+            "type": "string",
+            "name": "isMinor",
+            "multiValueHandling": "SORTED_ARRAY",
+            "createBitmapIndex": true
+          },
+          {
+            "type": "string",
+            "name": "isNew",
+            "multiValueHandling": "SORTED_ARRAY",
+            "createBitmapIndex": true
+          },
+          {
+            "type": "string",
+            "name": "isRobot",
+            "multiValueHandling": "SORTED_ARRAY",
+            "createBitmapIndex": true
+          },
+          {
+            "type": "string",
+            "name": "isUnpatrolled",
+            "multiValueHandling": "SORTED_ARRAY",
+            "createBitmapIndex": true
+          },
+          {
+            "type": "string",
+            "name": "metroCode",
+            "multiValueHandling": "SORTED_ARRAY",
+            "createBitmapIndex": true
+          },
+          {
+            "type": "string",
+            "name": "namespace",
+            "multiValueHandling": "SORTED_ARRAY",
+            "createBitmapIndex": true
+          },
+          {
+            "type": "string",
+            "name": "page",
+            "multiValueHandling": "SORTED_ARRAY",
+            "createBitmapIndex": true
+          },
+          {
+            "type": "string",
+            "name": "regionIsoCode",
+            "multiValueHandling": "SORTED_ARRAY",
+            "createBitmapIndex": true
+          },
+          {
+            "type": "string",
+            "name": "regionName",
+            "multiValueHandling": "SORTED_ARRAY",
+            "createBitmapIndex": true
+          },
+          {
+            "type": "string",
+            "name": "user",
+            "multiValueHandling": "SORTED_ARRAY",
+            "createBitmapIndex": true
+          },
+          {
+            "type": "long",
+            "name": "delta",
+            "multiValueHandling": "SORTED_ARRAY",
+            "createBitmapIndex": false
+          },
+          {
+            "type": "long",
+            "name": "added",
+            "multiValueHandling": "SORTED_ARRAY",
+            "createBitmapIndex": false
+          },
+          {
+            "type": "long",
+            "name": "deleted",
+            "multiValueHandling": "SORTED_ARRAY",
+            "createBitmapIndex": false
+          }
+        ],
+        "dimensionExclusions": [
+          "__time",
+          "time"
+        ]
+      },
+      "metricsSpec": [],
+      "granularitySpec": {
+        "type": "uniform",
+        "segmentGranularity": "DAY",
+        "queryGranularity": {
+          "type": "none"
+        },
+        "rollup": false,
+        "intervals": []
+      },
+      "transformSpec": {
+        "filter": null,
+        "transforms": []
+      }
+    },
+    "ioConfig": {
+      "type": "index_parallel",
+      "inputSource": {
+        "type": "local",
+        "baseDir": "/Users/hellmarbecker/apache-druid-0.22.1/quickstart/tutorial",
+        "filter": "wikiticker-2015-09-12-sampled.json.gz",
+        "files": []
+      },
+      "inputFormat": {
+        "type": "json",
+        "flattenSpec": {
+          "useFieldDiscovery": true,
+          "fields": []
+        },
+        "featureSpec": {}
+      },
+      "appendToExisting": false,
+      "dropExisting": false
+    },
+    "tuningConfig": {
+      "type": "index_parallel",
+      "maxRowsPerSegment": 14000,
+      "appendableIndexSpec": {
+        "type": "onheap"
+      },
+      "maxRowsInMemory": 1000000,
+      "maxBytesInMemory": 0,
+      "skipBytesInMemoryOverheadCheck": false,
+      "maxTotalRows": null,
+      "numShards": null,
+      "splitHintSpec": null,
+      "partitionsSpec": {
+        "type": "range",
+        "partitionDimensions": [
+          "channel",
+          "user"
+        ],
+        "maxRowsPerSegment": 14000
+      },
+      "indexSpec": {
+        "bitmap": {
+          "type": "roaring",
+          "compressRunOnSerialization": true
+        },
+        "dimensionCompression": "lz4",
+        "metricCompression": "lz4",
+        "longEncoding": "longs",
+        "segmentLoader": null
+      },
+      "indexSpecForIntermediatePersists": {
+        "bitmap": {
+          "type": "roaring",
+          "compressRunOnSerialization": true
+        },
+        "dimensionCompression": "lz4",
+        "metricCompression": "lz4",
+        "longEncoding": "longs",
+        "segmentLoader": null
+      },
+      "maxPendingPersists": 0,
+      "forceGuaranteedRollup": true,
+      "reportParseExceptions": false,
+      "pushTimeout": 0,
+      "segmentWriteOutMediumFactory": null,
+      "maxNumConcurrentSubTasks": 1,
+      "maxRetry": 3,
+      "taskStatusCheckPeriodMs": 1000,
+      "chatHandlerTimeout": "PT10S",
+      "chatHandlerNumRetries": 5,
+      "maxNumSegmentsToMerge": 100,
+      "totalNumMergeTasks": 10,
+      "logParseExceptions": false,
+      "maxParseExceptions": 2147483647,
+      "maxSavedParseExceptions": 0,
+      "maxColumnsToMerge": -1,
+      "awaitSegmentAvailabilityTimeoutMillis": 0,
+      "partitionDimensions": [
+        "channel",
+        "user"
+      ]
+    }
+  }
+}
