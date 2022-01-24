@@ -2,9 +2,9 @@
 
 # path settings for default quickstart install
 
-DRUID_HOME="${HOME}/apache-druid-0.22.1"
+DRUID_HOME="${HOME}/apache-druid-0.23.0-SNAPSHOT"
 DRUID_DATADIR="${DRUID_HOME}/var/druid/segments"
-DRUID_DATASOURCE="wikipedia-single"
+DRUID_DATASOURCE="wikipedia-range"
 DUMP_TMPDIR="${HOME}/tmpwork"
 
 TOPN=5
