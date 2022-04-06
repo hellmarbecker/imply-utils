@@ -12,3 +12,23 @@ and then
 ```bash
 cat linecounts | ./sum.sh
 ```
+
+## Transpose JSON
+
+We have something like
+
+```
+{ field1: { id: stuff ... }, field2: { id: stuff ... } ... }
+```
+
+and we want
+
+```
+{ id: { field1: ..., field2: ...  }
+```
+
+call transpose script like so:
+
+```
+python3 imply-utils/transpose_json.py < Claim_Anonymized.json| jq -c '.[]' | less 
+```
