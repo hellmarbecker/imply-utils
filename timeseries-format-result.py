@@ -7,7 +7,9 @@ def main():
         reader = csv.DictReader(csv_file)
 
         for row in reader:
-            print(row)
+            for k, v in row.items():
+                print(k)
+                print(json.dumps(json.loads(v), indent=2))
 
 
 if __name__ == "__main__":
