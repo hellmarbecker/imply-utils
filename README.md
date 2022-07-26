@@ -33,7 +33,7 @@ call transpose script like so:
 python3 imply-utils/transpose_json.py < Claim_Anonymized.json| jq -c '.[]' | less 
 ```
 
-Get a list of all columns that have a bitmap index
+## Get a list of all columns that have a bitmap index
 
 ```bash
 list-indexed-columns.sh
