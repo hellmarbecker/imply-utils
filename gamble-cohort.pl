@@ -23,6 +23,7 @@ my $stop = DateTime->new(
 
 my $numPlayers = 100000;
 my $playerMaxAge = 730;
+my $minEventsPerDay = 300;
 my $maxEventsPerDay = 1000;
 my $maxDeposit = 50;
 
@@ -46,13 +47,13 @@ say "curdate,playerid,signupdate,deposit";
 
 for ( my $d = $start->clone; $d < $stop; $d->add(days => 1) ) {
     my $n = 0;
-    my $numEventsMax = int(rand($maxEventsPerDay));    
+    my $numEventsMax = $minEventsPerDay + int(rand($maxEventsPerDay - $minEventsPerDay));
     while ($n < $numEventsMax) {
         my $ind = int(rand($numPlayers));
         my $playerID = $players[$ind];
         # my $playerAge = ($d - $playerSignup[$ind])->days;
+        next if ( $playerSignup[$ind] > $d ); # player did not exist yet
         my $playerAge = $d->delta_days($playerSignup[$ind])->in_units('days');
-        next if ( $playerAge < 0 ); # player did not exist yet
         my $cooldown = exp(-3.0 * $playerAge / $playerMaxAge);
         next if ( rand(1.0) > $cooldown ); # simulate that players churn off slowly
         # say "$d $n $ind $playerID $playerSignup[$ind] $playerAge $cooldown";
