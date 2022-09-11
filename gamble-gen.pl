@@ -29,7 +29,7 @@ my $measureName = $opts{m} or die $usage;
 
 say "ts,brand,$measureName";
 
-for ( my $d = $start; $d < $stop; $d->add(days => 1) ) {
+for ( my $d = $start->clone; $d < $stop; $d->add(days => 1) ) {
 
     for my $brand(@brands) {
         my $measure = int(rand(1000));
