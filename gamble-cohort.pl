@@ -1,7 +1,6 @@
 #!/usr/bin/perl
 # create data set for cohort analysis
 
-use v5.10;
 use strict;
 use warnings;
 
@@ -41,7 +40,7 @@ for my $i (0 .. $numPlayers-1 ) {
     $playerSignup[$i] = $signupDate;
 }
 
-say "curdate,playerid,signupdate,deposit";
+print "curdate,playerid,signupdate,deposit\n";
 
 for ( my $d = $start->clone; $d < $stop; $d->add(days => 1) ) {
     my $n = 0;
@@ -56,7 +55,7 @@ for ( my $d = $start->clone; $d < $stop; $d->add(days => 1) ) {
         next if ( rand(1.0) > $cooldown ); # simulate that players churn off slowly
 
         my $deposit = sprintf("%.2f", rand($maxDeposit));
-        say "$d,$playerID,$playerSignup[$ind],$deposit";
+        print "$d,$playerID,$playerSignup[$ind],$deposit\n";
         ++$n;
     }
 }
