@@ -6,7 +6,7 @@ fake = Faker()
 
 def main():
 
-    ts = time.time()
+    ts = time.time() - 10 * 86400 # 10 days back
     for sid in range(10000):
 
         uid = fake.random_int(min=1, max=1000)
@@ -20,6 +20,7 @@ def main():
             "pagesPerSession" : pagesPerSession
         } 
         print(json.dumps(emitRecord))
+        ts += fake.random_int(min=60, max=600)
 
 if __name__ == "__main__":
     main()
