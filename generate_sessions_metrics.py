@@ -49,7 +49,7 @@ def main():
     for sid in range(maxSessions):
 
         uid = fake.random_int(min=0, max=maxUsers-1)
-        seg = segment[uid]
+        seg = "A" # segment[uid]
         pagesPerSession = 1 + round(distr['pagesPerSession'][seg]['fn'](*distr['pagesPerSession'][seg]['param']))
         sessionLength = round(distr['sessionLength'][seg]['fn'](*distr['sessionLength'][seg]['param']), 2)
         
